@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -17,11 +17,13 @@ class UserController extends Controller
    *
    * @return View
    */
+
+
   public function index(): View
   {
-    // Retrieve all users with their roles and profiles, including avatar paths
     $users = User::with(['role', 'profile'])->get();
-    return view('user.index', compact('users'));  // Use 'user.index' for view
+
+    return view('users.index', compact('users'));
   }
 
   /**
@@ -35,7 +37,7 @@ class UserController extends Controller
     // Load the profile data along with the avatar path
     $user->load('profile');
 
-    return view('user.show', compact('user'));  // Use 'user.show' for view
+    return view('users.show', compact('user'));  // Use 'user.show' for view
   }
 
   /**
@@ -50,7 +52,7 @@ class UserController extends Controller
     $roles = Role::all();
     $user->load('profile');  // Load the profile for editing, including avatar
 
-    return view('user.edit', compact('user', 'roles'));  // Use 'user.edit' for view
+    return view('users.edit', compact('user', 'roles'));  // Use 'user.edit' for view
   }
 
   /**
@@ -102,7 +104,6 @@ class UserController extends Controller
    */
   public function store(Request $request): RedirectResponse
   {
-    // Create a new user
     $user = User::create([
       'name' => $request->name,
       'email' => $request->email,
@@ -110,23 +111,20 @@ class UserController extends Controller
       'role_id' => $request->role_id,
     ]);
 
-    // Handle avatar upload
-    $avatarPath = null;
-    if ($request->hasFile('avatar')) {
-      $avatarPath = $request->file('avatar')->store('avatars', 'public');  // Store avatar in public disk
-    }
+    $avatarPath = $request->hasFile('avatar')
+      ? Storage::disk('public')->put('avatars', $request->file('avatar'))
+      : null;
 
-    // Create a new profile for the user
     $user->profile()->create([
       'biodata' => $request->biodata,
       'age' => $request->age,
       'address' => $request->address,
-      'avatar' => $avatarPath,  // Save the avatar path
+      'avatar' => $avatarPath,
     ]);
 
-    // Redirect to the user list with a success message
     return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan!');
   }
+
 
   /**
    * Show the form for creating a new user.
@@ -137,7 +135,7 @@ class UserController extends Controller
   {
     // Get all roles to populate the role dropdown
     $roles = Role::all();
-    return view('user.create', compact('roles'));  // Use 'user.create' for view
+    return view('users.create', compact('roles'));  // Use 'user.create' for view
   }
 
   /**

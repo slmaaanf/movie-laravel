@@ -21,7 +21,6 @@ class MovieFactory extends Factory
     return [
       'title' => $this->faker->sentence(3),
       'synopsis' => $this->faker->paragraph(3),
-      'poster' => $this->faker->imageUrl(200, 300, 'movies', true, 'Faker'),
       'year' => $this->faker->year,
       'available' => $this->faker->boolean,
       'genre_id' => Genre::inRandomOrder()->first()->id, // Mengambil genre secara acak

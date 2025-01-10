@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-  use HasFactory, HasUuids;
+    use HasFactory, HasUuids;
 
-  protected $fillable = ['name'];
+    // Kolom yang dapat diisi (mass assignable)
+    protected $fillable = ['name'];
+
+    // Relasi ke model Movie
+    public function movies()
+    {
+        return $this->hasMany(Movie::class);
+    }
 }

@@ -1,18 +1,19 @@
 <?php
 
+use App\Http\Controllers\CastController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::redirect('/', '/movies');  // Redirect root URL ke /movies
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Rute CRUD untuk Movie dengan menggunakan resource controller
+Route::resource('roles', RoleController::class);
+Route::resource('users', UserController::class);
+Route::resource('casts', CastController::class);
+Route::resource('genres', GenreController::class);
+Route::resource('movies', MovieController::class);
+Route::resource('reviews', ReviewController::class);

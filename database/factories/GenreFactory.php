@@ -7,22 +7,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GenreFactory extends Factory
 {
-  /**
-   * The name of the factory's corresponding model.
-   *
-   * @var string
-   */
   protected $model = Genre::class;
 
-  /**
-   * Define the model's default state.
-   *
-   * @return array
-   */
   public function definition()
   {
     return [
-      'name' => $this->faker->word(), // Menghasilkan kata acak untuk nama genre
+      'name' => $this->faker->word(),
     ];
   }
 }

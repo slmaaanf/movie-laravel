@@ -3,23 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   */
-  public function index()
+  public function index(): Factory|\Illuminate\Foundation\Application|View|Application
   {
     $roles = Role::all();
-    return view('role.index', compact('roles'));
+    return view('roles.index', compact('roles'));
   }
 
-  /**
-   * Store a newly created resource in storage.
-   */
-  public function store(Request $request)
+  public function store(Request $request): RedirectResponse
   {
     Role::create([
       'name' => $request->name,
@@ -28,34 +26,22 @@ class RoleController extends Controller
     return redirect()->route('roles.index')->with('success', 'Peran berhasil ditambahkan!');
   }
 
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
+  public function create(): Factory|\Illuminate\Foundation\Application|View|Application
   {
-    return view('role.create');
+    return view('roles.create');
   }
 
-  /**
-   * Display the specified resource.
-   */
-  public function show(Role $role)
+  public function show(Role $role): Factory|\Illuminate\Foundation\Application|View|Application
   {
-    return view('role.show', compact('role'));
+    return view('roles.show', compact('role'));
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   */
-  public function edit(Role $role)
+  public function edit(Role $role): Factory|\Illuminate\Foundation\Application|View|Application
   {
-    return view('role.edit', compact('role'));
+    return view('roles.edit', compact('role'));
   }
 
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(Request $request, Role $role)
+  public function update(Request $request, Role $role): RedirectResponse
   {
     $role->update([
       'name' => $request->name,
@@ -64,10 +50,7 @@ class RoleController extends Controller
     return redirect()->route('roles.index')->with('success', 'Peran berhasil diperbarui!');
   }
 
-  /**
-   * Remove the specified resource from storage.
-   */
-  public function destroy(Role $role)
+  public function destroy(Role $role): RedirectResponse
   {
     $role->delete();
 

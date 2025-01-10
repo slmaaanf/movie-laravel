@@ -15,7 +15,6 @@ class CastFactory extends Factory
       'name' => $this->faker->name(),
       'age' => $this->faker->numberBetween(18, 60),
       'biodata' => $this->faker->paragraph(),
-      'avatar' => $this->faker->imageUrl(400, 400, 'people', true),  // Random avatar image URL
     ];
   }
 }

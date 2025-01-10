@@ -23,8 +23,9 @@ class ReviewFactory extends Factory
       'id' => $this->faker->uuid,
       'review' => $this->faker->paragraph,
       'rating' => $this->faker->numberBetween(1, 5),
-      'user_id' => User::factory(),
-      'movie_id' => Movie::factory(),
+      // Fetch a random User and Movie from the database
+      'user_id' => User::inRandomOrder()->first()->id,
+      'movie_id' => Movie::inRandomOrder()->first()->id,
     ];
   }
 }
