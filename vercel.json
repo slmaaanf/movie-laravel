@@ -17,6 +17,6 @@
         }
     ],
     "env": {
-        "PHP_EXTENSIONS": "pdo_pgsql, pgsql, pdo, mbstring, openssl"
+        "PHP_EXTENSIONS": "pdo_pgsql, pgsql"
     }
 }
