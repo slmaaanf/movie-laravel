@@ -15,8 +15,5 @@
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
-    ],
-    "env": {
-        "PHP_EXTENSIONS": "pdo_pgsql, pgsql"
-    }
+    ]
 }
